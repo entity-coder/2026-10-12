@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapConvert — bulk image compressor & resizer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <h1>SnapConvert</h1>
+      <p class="tagline">Drop in a batch of photos, get shrunk copies back. 100% in your browser — nothing ever uploads.</p>
+    </header>
+
+    <section id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Add images">
+      <div class="dz-inner">
+        <span class="dz-icon" aria-hidden="true">🖼️</span>
+        <p><strong>Drag &amp; drop images here</strong></p>
+        <p class="dz-sub">or <button id="browseBtn" type="button" class="linklike">browse files</button> — PNG, JPEG, WebP, GIF, BMP…</p>
+        <input id="fileInput" type="file" accept="image/*" multiple hidden />
+      </div>
+    </section>
+
+    <section class="settings" aria-label="Conversion settings">
+      <div class="setting">
+        <label class="setting-title">Output format</label>
+        <div class="seg" role="radiogroup" aria-label="Output format">
+          <label class="seg-opt"><input type="radio" name="format" value="image/jpeg" checked /><span>JPEG</span></label>
+          <label class="seg-opt"><input type="radio" name="format" value="image/png" /><span>PNG</span></label>
+          <label class="seg-opt" id="webpOpt"><input type="radio" name="format" value="image/webp" /><span>WebP</span></label>
+        </div>
+      </div>
+      <div class="setting">
+        <label class="setting-title" for="quality">Quality <output id="qualityVal">80%</output></label>
+        <input id="quality" type="range" min="10" max="100" value="80" step="1" />
+        <p class="hint">Applies to JPEG / WebP. PNG is lossless — the slider is ignored for it.</p>
+      </div>
+      <div class="setting">
+        <label class="setting-title" for="maxdim">Max dimension <output id="maxdimVal">1920 px</output></label>
+        <input id="maxdim" type="range" min="480" max="4000" value="1920" step="80" />
+        <p class="hint">The long edge is capped; aspect ratio is kept. Smaller = lighter files.</p>
+      </div>
+    </section>
+
+    <section id="summary" class="summary hidden" aria-live="polite">
+      <div class="sum-stats">
+        <div><span class="sum-label">Files</span><strong id="sumFiles">0</strong></div>
+        <div><span class="sum-label">Original</span><strong id="sumOrig">–</strong></div>
+        <div><span class="sum-label">Converted</span><strong id="sumOut">–</strong></div>
+        <div><span class="sum-label">Saved</span><strong id="sumSaved" class="good">–</strong></div>
+      </div>
+      <div class="sum-actions">
+        <button id="zipBtn" type="button" class="primary">⬇ Download all as ZIP</button>
+        <button id="clearBtn" type="button" class="ghost">Clear all</button>
+      </div>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section id="grid" class="grid" aria-live="polite"></section>
+
+    <footer class="foot">
+      <p>Runs fully offline (open <code>index.html</code> — no server, no account). JSZip 3.10.1 bundled under <code>lib/</code> (MIT).</p>
+    </footer>
+  </main>
+
+  <script src="lib/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
